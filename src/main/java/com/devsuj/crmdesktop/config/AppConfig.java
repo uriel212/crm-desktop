@@ -26,7 +26,11 @@ public record AppConfig(String apiBaseUrl, boolean usarDatosDePrueba) {
         apiBaseUrl = apiBaseUrl.strip().replaceAll("/+$", "");
     }
 
-    /** Lee config.properties desde el classpath (src/main/resources). */
+    /**
+     * Lee config.properties desde el classpath (src/main/resources). La propiedad de sistema
+     * {@code api.base-url} tiene prioridad: así {@code ./gradlew run -Plocal} usa la API local
+     * sin tocar el archivo.
+     */
     public static AppConfig cargar() {
         try (InputStream entrada = AppConfig.class.getResourceAsStream(ARCHIVO)) {
             if (entrada == null) {
@@ -34,7 +38,7 @@ public record AppConfig(String apiBaseUrl, boolean usarDatosDePrueba) {
             }
             Properties propiedades = new Properties();
             propiedades.load(entrada);
-            return desde(propiedades);
+            return desde(propiedades, System.getProperty(CLAVE_API_BASE_URL));
         } catch (IOException e) {
             throw new UncheckedIOException("No se pudo leer " + ARCHIVO, e);
         }
@@ -45,5 +49,16 @@ public record AppConfig(String apiBaseUrl, boolean usarDatosDePrueba) {
         return new AppConfig(
                 propiedades.getProperty(CLAVE_API_BASE_URL),
                 Boolean.parseBoolean(propiedades.getProperty(CLAVE_DATOS_DE_PRUEBA, "false").strip()));
+    }
+
+    /** Igual que {@link #desde(Properties)}, pero {@code urlForzada} (si no está vacía) reemplaza la URL del archivo. */
+    public static AppConfig desde(Properties propiedades, String urlForzada) {
+        if (urlForzada == null || urlForzada.isBlank()) {
+            return desde(propiedades);
+        }
+        Properties copia = new Properties();
+        copia.putAll(propiedades);
+        copia.setProperty(CLAVE_API_BASE_URL, urlForzada);
+        return desde(copia);
     }
 }

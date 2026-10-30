@@ -56,6 +56,13 @@ tasks.withType(JavaCompile).configureEach {
     options.encoding = 'UTF-8'
 }
 
+// ./gradlew run -Plocal → usa la API local (http://localhost:8080/api) sin editar config.properties.
+tasks.named('run') {
+    if (project.hasProperty('local')) {
+        systemProperty 'api.base-url', 'http://localhost:8080/api'
+    }
+}
+
 tasks.named('test') {
     useJUnitPlatform()
 }

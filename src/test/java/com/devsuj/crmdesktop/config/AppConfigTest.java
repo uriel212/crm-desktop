@@ -13,7 +13,24 @@ class AppConfigTest {
 
     @Test
     void cargaLaUrlDesdeConfigProperties() {
-        assertEquals("http://localhost:8080/api", AppConfig.cargar().apiBaseUrl());
+        assertTrue(AppConfig.cargar().apiBaseUrl().startsWith("http"));
+    }
+
+    @Test
+    void laUrlForzadaTienePrioridadSobreElArchivo() {
+        Properties propiedades = new Properties();
+        propiedades.setProperty("api.base-url", "https://api.nube.test/api");
+
+        assertEquals("http://localhost:8080/api",
+                AppConfig.desde(propiedades, "http://localhost:8080/api").apiBaseUrl());
+    }
+
+    @Test
+    void sinUrlForzadaSeUsaLaDelArchivo() {
+        Properties propiedades = new Properties();
+        propiedades.setProperty("api.base-url", "https://api.nube.test/api");
+
+        assertEquals("https://api.nube.test/api", AppConfig.desde(propiedades, " ").apiBaseUrl());
     }
 
     @Test
