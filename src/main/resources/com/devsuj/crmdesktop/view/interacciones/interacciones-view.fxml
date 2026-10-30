@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.ProgressIndicator?>
+<?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.Tooltip?>
+<?import javafx.scene.layout.FlowPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import org.kordamp.ikonli.javafx.FontIcon?>
+
+<!-- Interacciones: historial (izquierda) y agenda de próximas actividades (derecha).
+     Los filtros están en un FlowPane: si la ventana es angosta pasan a otra fila. -->
+<VBox xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml"
+      fx:controller="com.devsuj.crmdesktop.view.interacciones.InteraccionesController"
+      spacing="16" styleClass="pantalla">
+
+    <Label text="Interacciones y agenda" styleClass="title-2"/>
+
+    <HBox spacing="8" alignment="CENTER_LEFT">
+        <Button text="Nueva" onAction="#onNueva" styleClass="accent">
+            <graphic><FontIcon iconLiteral="fth-plus"/></graphic>
+            <tooltip><Tooltip text="Registrar un contacto o agendar una actividad (Ctrl+N)"/></tooltip>
+        </Button>
+        <Button fx:id="botonEditar" onAction="#onEditar">
+            <graphic><FontIcon iconLiteral="fth-edit-2"/></graphic>
+            <tooltip><Tooltip text="Corregir o reprogramar la interacción elegida"/></tooltip>
+        </Button>
+        <Button fx:id="botonRealizada" text="Marcar realizada" onAction="#onMarcarRealizada" styleClass="success">
+            <graphic><FontIcon iconLiteral="fth-check"/></graphic>
+            <tooltip><Tooltip text="La actividad programada ya ocurrió: registra su resultado"/></tooltip>
+        </Button>
+        <Button fx:id="botonCancelar" text="Cancelar actividad" onAction="#onCancelar" styleClass="danger">
+            <graphic><FontIcon iconLiteral="fth-x"/></graphic>
+            <tooltip><Tooltip text="La actividad programada no se realizará (no se borra)"/></tooltip>
+        </Button>
+        <Region HBox.hgrow="ALWAYS"/>
+        <CheckBox fx:id="soloMias" text="Solo mías"/>
+        <Button onAction="#onRecargar" styleClass="button-icon">
+            <graphic><FontIcon iconLiteral="fth-refresh-cw"/></graphic>
+            <tooltip><Tooltip text="Recargar (F5)"/></tooltip>
+        </Button>
+    </HBox>
+
+    <SplitPane dividerPositions="0.72" VBox.vgrow="ALWAYS">
+        <VBox spacing="8" minWidth="480">
+            <FlowPane hgap="8" vgap="8" alignment="CENTER_LEFT">
+                <StackPane fx:id="contenedorCliente" prefWidth="240"/>
+                <ComboBox fx:id="filtroTipo" prefWidth="140"/>
+                <ComboBox fx:id="filtroEstado" prefWidth="150"/>
+                <DatePicker fx:id="filtroDesde" promptText="Desde" prefWidth="130"/>
+                <DatePicker fx:id="filtroHasta" promptText="Hasta" prefWidth="130"/>
+                <Button onAction="#onLimpiarFiltros" styleClass="button-icon, flat">
+                    <graphic><FontIcon iconLiteral="fth-x-circle"/></graphic>
+                    <tooltip><Tooltip text="Quitar todos los filtros"/></tooltip>
+                </Button>
+            </FlowPane>
+            <StackPane VBox.vgrow="ALWAYS">
+                <TableView fx:id="tabla">
+                    <columns>
+                        <TableColumn fx:id="colFecha" text="Fecha" minWidth="125"/>
+                        <TableColumn fx:id="colTipo" text="Tipo" minWidth="85"/>
+                        <TableColumn fx:id="colAsunto" text="Asunto" minWidth="140"/>
+                        <TableColumn fx:id="colCliente" text="Cliente" minWidth="110"/>
+                        <TableColumn fx:id="colEstado" text="Estado" minWidth="105"/>
+                        <TableColumn fx:id="colUsuario" text="Usuario" minWidth="100"/>
+                    </columns>
+                </TableView>
+                <VBox fx:id="capaCarga" alignment="CENTER" styleClass="capa-carga">
+                    <ProgressIndicator/>
+                </VBox>
+            </StackPane>
+            <HBox spacing="8" alignment="CENTER_RIGHT">
+                <Label fx:id="etiquetaPaginacion" styleClass="text-muted"/>
+                <Button fx:id="botonAnterior" styleClass="button-icon">
+                    <graphic><FontIcon iconLiteral="fth-chevron-left"/></graphic>
+                    <tooltip><Tooltip text="Página anterior"/></tooltip>
+                </Button>
+                <Button fx:id="botonSiguiente" styleClass="button-icon">
+                    <graphic><FontIcon iconLiteral="fth-chevron-right"/></graphic>
+                    <tooltip><Tooltip text="Página siguiente"/></tooltip>
+                </Button>
+            </HBox>
+        </VBox>
+
+        <VBox spacing="8" minWidth="240" styleClass="panel-detalle">
+            <Label text="Próximas actividades (7 días)" styleClass="title-4"/>
+            <StackPane VBox.vgrow="ALWAYS">
+                <ListView fx:id="agenda"/>
+                <VBox fx:id="capaCargaAgenda" alignment="CENTER" styleClass="capa-carga">
+                    <ProgressIndicator/>
+                </VBox>
+            </StackPane>
+        </VBox>
+    </SplitPane>
+</VBox>

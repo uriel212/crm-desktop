@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ProgressIndicator?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.Tooltip?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.TilePane?>
+<?import javafx.scene.layout.VBox?>
+<?import org.kordamp.ikonli.javafx.FontIcon?>
+
+<!-- Fidelización: el usuario elige un cliente y ve su saldo (tarjetas) y su estado de cuenta (tabla). -->
+<VBox xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml"
+      fx:controller="com.devsuj.crmdesktop.view.fidelizacion.FidelizacionController"
+      spacing="16" styleClass="pantalla">
+
+    <Label text="Fidelización" styleClass="title-2"/>
+
+    <HBox spacing="8" alignment="CENTER_LEFT">
+        <StackPane fx:id="contenedorCliente" prefWidth="360"/>
+        <Region HBox.hgrow="ALWAYS"/>
+        <Button fx:id="botonCanjear" text="Canjear puntos" onAction="#onCanjear" styleClass="accent">
+            <graphic><FontIcon iconLiteral="fth-gift"/></graphic>
+            <tooltip><Tooltip text="Canjear puntos del cliente por un producto con precio en puntos"/></tooltip>
+        </Button>
+        <Button onAction="#onRecargar" styleClass="button-icon">
+            <graphic><FontIcon iconLiteral="fth-refresh-cw"/></graphic>
+            <tooltip><Tooltip text="Recargar"/></tooltip>
+        </Button>
+    </HBox>
+
+    <TilePane fx:id="tarjetas" hgap="12" vgap="12" prefColumns="3" prefTileWidth="260"/>
+
+    <StackPane VBox.vgrow="ALWAYS">
+        <TableView fx:id="tabla">
+            <columns>
+                <TableColumn fx:id="colFecha" text="Fecha" minWidth="120"/>
+                <TableColumn fx:id="colTipo" text="Tipo" minWidth="100"/>
+                <TableColumn fx:id="colPuntos" text="Puntos" minWidth="80"/>
+                <TableColumn fx:id="colMotivo" text="Detalle" minWidth="220"/>
+                <TableColumn fx:id="colUsuario" text="Registró" minWidth="120"/>
+            </columns>
+        </TableView>
+        <VBox fx:id="capaCarga" alignment="CENTER" styleClass="capa-carga">
+            <ProgressIndicator/>
+        </VBox>
+    </StackPane>
+
+    <HBox spacing="8" alignment="CENTER_RIGHT">
+        <Label fx:id="etiquetaPaginacion" styleClass="text-muted"/>
+        <Button fx:id="botonAnterior" styleClass="button-icon">
+            <graphic><FontIcon iconLiteral="fth-chevron-left"/></graphic>
+            <tooltip><Tooltip text="Página anterior"/></tooltip>
+        </Button>
+        <Button fx:id="botonSiguiente" styleClass="button-icon">
+            <graphic><FontIcon iconLiteral="fth-chevron-right"/></graphic>
+            <tooltip><Tooltip text="Página siguiente"/></tooltip>
+        </Button>
+    </HBox>
+</VBox>

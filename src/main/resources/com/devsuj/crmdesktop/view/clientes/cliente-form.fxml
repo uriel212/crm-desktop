@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.VBox?>
+
+<!-- Formulario de cliente. ClienteDialogo crea el ClienteFormController (necesita el cliente a
+     editar) y la controllerFactory del FXMLLoader lo entrega.
+     GridPane con columnas en porcentaje: se adapta al ancho del diálogo.
+     El orden de los campos en el archivo es el orden del Tab. -->
+<VBox xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml"
+      fx:controller="com.devsuj.crmdesktop.view.clientes.ClienteFormController"
+      spacing="12" prefWidth="560">
+
+    <Label fx:id="mensajeGeneral" styleClass="mensaje-general" wrapText="true" maxWidth="Infinity" minHeight="-Infinity"/>
+
+    <GridPane hgap="16" vgap="12">
+        <columnConstraints>
+            <ColumnConstraints percentWidth="50"/>
+            <ColumnConstraints percentWidth="50"/>
+        </columnConstraints>
+
+        <VBox spacing="4" GridPane.columnIndex="0" GridPane.rowIndex="0">
+            <Label text="Nombre *"/>
+            <TextField fx:id="campoNombre" promptText="Nombre de la persona de contacto"/>
+            <Label fx:id="errorNombre" styleClass="error-campo" wrapText="true" minHeight="-Infinity"/>
+        </VBox>
+        <VBox spacing="4" GridPane.columnIndex="1" GridPane.rowIndex="0">
+            <Label text="Empresa"/>
+            <TextField fx:id="campoEmpresa" promptText="Opcional"/>
+            <Label fx:id="errorEmpresa" styleClass="error-campo" wrapText="true" minHeight="-Infinity"/>
+        </VBox>
+
+        <VBox spacing="4" GridPane.columnIndex="0" GridPane.rowIndex="1">
+            <Label text="Email *"/>
+            <TextField fx:id="campoEmail" promptText="nombre@empresa.com"/>
+            <Label fx:id="errorEmail" styleClass="error-campo" wrapText="true" minHeight="-Infinity"/>
+        </VBox>
+        <VBox spacing="4" GridPane.columnIndex="1" GridPane.rowIndex="1">
+            <Label text="Teléfono"/>
+            <TextField fx:id="campoTelefono" promptText="Opcional, máximo 20 caracteres"/>
+            <Label fx:id="errorTelefono" styleClass="error-campo" wrapText="true" minHeight="-Infinity"/>
+        </VBox>
+
+        <VBox spacing="4" GridPane.columnIndex="0" GridPane.rowIndex="2" GridPane.columnSpan="2">
+            <Label text="Dirección"/>
+            <TextField fx:id="campoDireccion" promptText="Opcional"/>
+            <Label fx:id="errorDireccion" styleClass="error-campo" wrapText="true" minHeight="-Infinity"/>
+        </VBox>
+
+        <VBox spacing="4" GridPane.columnIndex="0" GridPane.rowIndex="3">
+            <Label text="Estado"/>
+            <ComboBox fx:id="comboEstado" maxWidth="Infinity"/>
+        </VBox>
+    </GridPane>
+
+    <Label text="* Campos obligatorios" styleClass="text-muted, text-small"/>
+</VBox>

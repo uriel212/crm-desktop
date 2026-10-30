@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ProgressIndicator?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.ToggleButton?>
+<?import javafx.scene.control.Tooltip?>
+<?import javafx.scene.layout.FlowPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import org.kordamp.ikonli.javafx.FontIcon?>
+
+<!-- Contratos: no se borran; se cancelan, se extienden o se renuevan. -->
+<VBox xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml"
+      fx:controller="com.devsuj.crmdesktop.view.contratos.ContratosController"
+      spacing="16" styleClass="pantalla">
+
+    <Label text="Contratos" styleClass="title-2"/>
+
+    <FlowPane hgap="8" vgap="8" alignment="CENTER_LEFT">
+        <ComboBox fx:id="filtroEstado" prefWidth="160"/>
+        <ToggleButton fx:id="botonPorVencer" text="Por vencer (30 días)">
+            <graphic><FontIcon iconLiteral="fth-clock"/></graphic>
+            <tooltip><Tooltip text="Contratos vigentes que vencen en los próximos 30 días"/></tooltip>
+        </ToggleButton>
+        <Button text="Nuevo" onAction="#onNuevo" styleClass="accent">
+            <graphic><FontIcon iconLiteral="fth-plus"/></graphic>
+            <tooltip><Tooltip text="Crear un contrato (nace como borrador)"/></tooltip>
+        </Button>
+        <Button fx:id="botonEditar" text="Editar" onAction="#onEditar">
+            <graphic><FontIcon iconLiteral="fth-edit-2"/></graphic>
+            <tooltip><Tooltip text="Solo contratos en borrador (doble clic en la fila)"/></tooltip>
+        </Button>
+        <Button fx:id="botonEstado" text="Cambiar estado" onAction="#onCambiarEstado">
+            <graphic><FontIcon iconLiteral="fth-toggle-right"/></graphic>
+            <tooltip><Tooltip text="Activar, marcar vencido o cancelar"/></tooltip>
+        </Button>
+        <Button fx:id="botonExtender" text="Extender" onAction="#onExtender">
+            <graphic><FontIcon iconLiteral="fth-calendar"/></graphic>
+            <tooltip><Tooltip text="Mover la fecha de fin de un contrato vigente"/></tooltip>
+        </Button>
+        <Button fx:id="botonRenovar" text="Renovar" onAction="#onRenovar">
+            <graphic><FontIcon iconLiteral="fth-rotate-cw"/></graphic>
+            <tooltip><Tooltip text="Crear un contrato nuevo ligado a este (vigente o vencido)"/></tooltip>
+        </Button>
+        <Button fx:id="botonVencidos" text="Marcar vencidos" onAction="#onMarcarVencidos" styleClass="danger">
+            <graphic><FontIcon iconLiteral="fth-alert-octagon"/></graphic>
+            <tooltip><Tooltip text="Marcar como vencidos, en lote, los vigentes cuya fecha ya pasó"/></tooltip>
+        </Button>
+        <Button onAction="#onRecargar" styleClass="button-icon">
+            <graphic><FontIcon iconLiteral="fth-refresh-cw"/></graphic>
+            <tooltip><Tooltip text="Recargar"/></tooltip>
+        </Button>
+    </FlowPane>
+
+    <StackPane VBox.vgrow="ALWAYS">
+        <TableView fx:id="tabla">
+            <columns>
+                <TableColumn fx:id="colTitulo" text="Contrato" minWidth="180"/>
+                <TableColumn fx:id="colCliente" text="Cliente" minWidth="130"/>
+                <TableColumn fx:id="colVigencia" text="Vigencia" minWidth="160"/>
+                <TableColumn fx:id="colMonto" text="Monto" minWidth="100"/>
+                <TableColumn fx:id="colEstado" text="Estado" minWidth="100"/>
+                <TableColumn fx:id="colVence" text="Vencimiento" minWidth="140"/>
+            </columns>
+        </TableView>
+        <VBox fx:id="capaCarga" alignment="CENTER" styleClass="capa-carga">
+            <ProgressIndicator/>
+        </VBox>
+    </StackPane>
+
+    <HBox spacing="8" alignment="CENTER_RIGHT">
+        <Label fx:id="etiquetaPaginacion" styleClass="text-muted"/>
+        <Button fx:id="botonAnterior" styleClass="button-icon">
+            <graphic><FontIcon iconLiteral="fth-chevron-left"/></graphic>
+            <tooltip><Tooltip text="Página anterior"/></tooltip>
+        </Button>
+        <Button fx:id="botonSiguiente" styleClass="button-icon">
+            <graphic><FontIcon iconLiteral="fth-chevron-right"/></graphic>
+            <tooltip><Tooltip text="Página siguiente"/></tooltip>
+        </Button>
+    </HBox>
+</VBox>

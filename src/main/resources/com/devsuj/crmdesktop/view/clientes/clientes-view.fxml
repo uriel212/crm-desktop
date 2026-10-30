@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import atlantafx.base.controls.CustomTextField?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ProgressIndicator?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.Tooltip?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import org.kordamp.ikonli.javafx.FontIcon?>
+
+<!-- Pantalla de clientes. VBox + HBox con hgrow/vgrow: la tabla crece con la ventana. -->
+<VBox xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml"
+      fx:controller="com.devsuj.crmdesktop.view.clientes.ClientesController"
+      spacing="16" styleClass="pantalla">
+
+    <Label text="Clientes" styleClass="title-2"/>
+
+    <!-- Barra de herramientas: búsqueda, filtro y acciones -->
+    <HBox spacing="8" alignment="CENTER_LEFT">
+        <CustomTextField fx:id="campoBusqueda" promptText="Buscar por nombre, empresa o email (Ctrl+F)"
+                         HBox.hgrow="ALWAYS" maxWidth="420">
+            <left>
+                <FontIcon iconLiteral="fth-search"/>
+            </left>
+        </CustomTextField>
+        <ComboBox fx:id="filtroEstado" promptText="Todos los estados" prefWidth="170"/>
+        <CheckBox fx:id="soloMios" text="Solo mis clientes"/>
+        <Region HBox.hgrow="ALWAYS"/>
+        <Button text="Nuevo" onAction="#onNuevo" styleClass="accent">
+            <graphic><FontIcon iconLiteral="fth-plus"/></graphic>
+            <tooltip><Tooltip text="Registrar un cliente (Ctrl+N)"/></tooltip>
+        </Button>
+        <Button fx:id="botonEditar" text="Editar" onAction="#onEditar">
+            <graphic><FontIcon iconLiteral="fth-edit-2"/></graphic>
+            <tooltip><Tooltip text="Editar el cliente seleccionado (doble clic en la fila)"/></tooltip>
+        </Button>
+        <Button fx:id="botonBaja" text="Dar de baja" onAction="#onDarDeBaja" styleClass="danger">
+            <graphic><FontIcon iconLiteral="fth-user-x"/></graphic>
+            <tooltip><Tooltip text="Pasar el cliente seleccionado a Inactivo"/></tooltip>
+        </Button>
+        <Button fx:id="boton360" text="Vista 360" onAction="#onVista360">
+            <graphic><FontIcon iconLiteral="fth-aperture"/></graphic>
+            <tooltip><Tooltip text="Resumen completo del cliente: compras, pipeline, actividad, puntos, contratos y tickets"/></tooltip>
+        </Button>
+        <Button fx:id="botonAsignar" text="Asignar" onAction="#onAsignar">
+            <graphic><FontIcon iconLiteral="fth-user-plus"/></graphic>
+            <tooltip><Tooltip text="Asignar o reasignar el responsable (Ctrl/Shift + clic para elegir varios)"/></tooltip>
+        </Button>
+        <Button onAction="#onRecargar" styleClass="button-icon">
+            <graphic><FontIcon iconLiteral="fth-refresh-cw"/></graphic>
+            <tooltip><Tooltip text="Recargar (F5)"/></tooltip>
+        </Button>
+    </HBox>
+
+    <!-- La capa de carga se dibuja encima de la tabla mientras se consulta la API -->
+    <StackPane VBox.vgrow="ALWAYS">
+        <TableView fx:id="tabla">
+            <columns>
+                <TableColumn fx:id="colNombre" text="Nombre" minWidth="140"/>
+                <TableColumn fx:id="colEmpresa" text="Empresa" minWidth="130"/>
+                <TableColumn fx:id="colEmail" text="Email" minWidth="170"/>
+                <TableColumn fx:id="colTelefono" text="Teléfono" minWidth="100"/>
+                <TableColumn fx:id="colEstado" text="Estado" minWidth="90"/>
+                <TableColumn fx:id="colVendedor" text="Vendedor" minWidth="110"/>
+            </columns>
+        </TableView>
+        <VBox fx:id="capaCarga" alignment="CENTER" styleClass="capa-carga">
+            <ProgressIndicator/>
+        </VBox>
+    </StackPane>
+
+    <!-- Paginación conectada con ?page= de la API -->
+    <HBox spacing="8" alignment="CENTER_RIGHT">
+        <Label fx:id="etiquetaPaginacion" styleClass="text-muted"/>
+        <Button fx:id="botonAnterior" styleClass="button-icon">
+            <graphic><FontIcon iconLiteral="fth-chevron-left"/></graphic>
+            <tooltip><Tooltip text="Página anterior"/></tooltip>
+        </Button>
+        <Button fx:id="botonSiguiente" styleClass="button-icon">
+            <graphic><FontIcon iconLiteral="fth-chevron-right"/></graphic>
+            <tooltip><Tooltip text="Página siguiente"/></tooltip>
+        </Button>
+    </HBox>
+</VBox>

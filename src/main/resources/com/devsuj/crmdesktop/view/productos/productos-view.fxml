@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import atlantafx.base.controls.CustomTextField?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ProgressIndicator?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.ToggleButton?>
+<?import javafx.scene.control.Tooltip?>
+<?import javafx.scene.layout.FlowPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import org.kordamp.ikonli.javafx.FontIcon?>
+
+<!-- Catálogo e inventario. Las acciones de gestión (HBox accionesGestion) solo las ven GERENTE y ADMIN. -->
+<VBox xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml"
+      fx:controller="com.devsuj.crmdesktop.view.productos.ProductosController"
+      spacing="16" styleClass="pantalla">
+
+    <Label text="Productos e inventario" styleClass="title-2"/>
+
+    <FlowPane hgap="8" vgap="8" alignment="CENTER_LEFT">
+        <CustomTextField fx:id="campoBusqueda" promptText="Buscar por nombre o descripción (Ctrl+F)" prefWidth="300">
+            <left><FontIcon iconLiteral="fth-search"/></left>
+        </CustomTextField>
+        <ComboBox fx:id="filtroCategoria" prefWidth="180"/>
+        <ComboBox fx:id="filtroActivo" prefWidth="160"/>
+        <ToggleButton fx:id="botonStockBajo" text="Stock bajo">
+            <graphic><FontIcon iconLiteral="fth-alert-triangle"/></graphic>
+            <tooltip><Tooltip text="Ver solo los productos que hay que resurtir"/></tooltip>
+        </ToggleButton>
+        <HBox fx:id="accionesGestion" spacing="8" alignment="CENTER_LEFT">
+            <Button text="Nuevo" onAction="#onNuevo" styleClass="accent">
+                <graphic><FontIcon iconLiteral="fth-plus"/></graphic>
+                <tooltip><Tooltip text="Agregar un producto (Ctrl+N)"/></tooltip>
+            </Button>
+            <Button fx:id="botonEditar" text="Editar" onAction="#onEditar">
+                <graphic><FontIcon iconLiteral="fth-edit-2"/></graphic>
+                <tooltip><Tooltip text="Editar el producto seleccionado (doble clic en la fila)"/></tooltip>
+            </Button>
+            <Button fx:id="botonEstado" onAction="#onCambiarEstado">
+                <graphic><FontIcon iconLiteral="fth-power"/></graphic>
+                <tooltip><Tooltip text="Activar o desactivar el producto seleccionado"/></tooltip>
+            </Button>
+            <Button fx:id="botonMovimiento" text="Entrada/Salida" onAction="#onMovimiento">
+                <graphic><FontIcon iconLiteral="fth-repeat"/></graphic>
+                <tooltip><Tooltip text="Registrar un ajuste manual de inventario"/></tooltip>
+            </Button>
+            <Button fx:id="botonKardex" text="Kardex" onAction="#onKardex">
+                <graphic><FontIcon iconLiteral="fth-list"/></graphic>
+                <tooltip><Tooltip text="Ver todos los movimientos del producto"/></tooltip>
+            </Button>
+            <Button text="Categorías" onAction="#onCategorias">
+                <graphic><FontIcon iconLiteral="fth-folder"/></graphic>
+                <tooltip><Tooltip text="Administrar las categorías del catálogo"/></tooltip>
+            </Button>
+        </HBox>
+        <Button onAction="#onRecargar" styleClass="button-icon">
+            <graphic><FontIcon iconLiteral="fth-refresh-cw"/></graphic>
+            <tooltip><Tooltip text="Recargar (F5)"/></tooltip>
+        </Button>
+    </FlowPane>
+
+    <StackPane VBox.vgrow="ALWAYS">
+        <TableView fx:id="tabla">
+            <columns>
+                <TableColumn fx:id="colNombre" text="Producto" minWidth="180"/>
+                <TableColumn fx:id="colCategoria" text="Categoría" minWidth="110"/>
+                <TableColumn fx:id="colPrecio" text="Precio" minWidth="100"/>
+                <TableColumn fx:id="colPuntos" text="Puntos" minWidth="70"/>
+                <TableColumn fx:id="colStock" text="Existencias" minWidth="120"/>
+                <TableColumn fx:id="colMinimo" text="Mínimo" minWidth="70"/>
+                <TableColumn fx:id="colEstado" text="Estado" minWidth="80"/>
+            </columns>
+        </TableView>
+        <VBox fx:id="capaCarga" alignment="CENTER" styleClass="capa-carga">
+            <ProgressIndicator/>
+        </VBox>
+    </StackPane>
+
+    <HBox spacing="8" alignment="CENTER_RIGHT">
+        <Label fx:id="etiquetaPaginacion" styleClass="text-muted"/>
+        <Button fx:id="botonAnterior" styleClass="button-icon">
+            <graphic><FontIcon iconLiteral="fth-chevron-left"/></graphic>
+            <tooltip><Tooltip text="Página anterior"/></tooltip>
+        </Button>
+        <Button fx:id="botonSiguiente" styleClass="button-icon">
+            <graphic><FontIcon iconLiteral="fth-chevron-right"/></graphic>
+            <tooltip><Tooltip text="Página siguiente"/></tooltip>
+        </Button>
+    </HBox>
+</VBox>

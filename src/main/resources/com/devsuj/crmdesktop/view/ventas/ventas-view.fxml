@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ProgressIndicator?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.Tooltip?>
+<?import javafx.scene.layout.FlowPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import org.kordamp.ikonli.javafx.FontIcon?>
+
+<!-- Ventas: una venta solo existe si se concretó; no se edita ni se cancela. -->
+<VBox xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml"
+      fx:controller="com.devsuj.crmdesktop.view.ventas.VentasController"
+      spacing="16" styleClass="pantalla">
+
+    <Label text="Ventas" styleClass="title-2"/>
+
+    <FlowPane hgap="8" vgap="8" alignment="CENTER_LEFT">
+        <Button text="Nueva venta" onAction="#onNueva" styleClass="accent">
+            <graphic><FontIcon iconLiteral="fth-plus"/></graphic>
+            <tooltip><Tooltip text="Registrar una venta concretada (Ctrl+N)"/></tooltip>
+        </Button>
+        <Button fx:id="botonDetalle" text="Ver detalle" onAction="#onDetalle">
+            <graphic><FontIcon iconLiteral="fth-file-text"/></graphic>
+            <tooltip><Tooltip text="Ver productos, promociones y puntos (doble clic en la fila)"/></tooltip>
+        </Button>
+        <StackPane fx:id="contenedorCliente" prefWidth="240"/>
+        <DatePicker fx:id="filtroDesde" promptText="Desde" prefWidth="130"/>
+        <DatePicker fx:id="filtroHasta" promptText="Hasta" prefWidth="130"/>
+        <CheckBox fx:id="soloMias" text="Solo mías"/>
+        <Button onAction="#onLimpiarFiltros" styleClass="button-icon, flat">
+            <graphic><FontIcon iconLiteral="fth-x-circle"/></graphic>
+            <tooltip><Tooltip text="Quitar los filtros de cliente y fechas"/></tooltip>
+        </Button>
+        <Button onAction="#onRecargar" styleClass="button-icon">
+            <graphic><FontIcon iconLiteral="fth-refresh-cw"/></graphic>
+            <tooltip><Tooltip text="Recargar (F5)"/></tooltip>
+        </Button>
+    </FlowPane>
+
+    <StackPane VBox.vgrow="ALWAYS">
+        <TableView fx:id="tabla">
+            <columns>
+                <TableColumn fx:id="colFecha" text="Fecha" minWidth="120"/>
+                <TableColumn fx:id="colNumero" text="Venta" minWidth="60"/>
+                <TableColumn fx:id="colCliente" text="Cliente" minWidth="150"/>
+                <TableColumn fx:id="colVendedor" text="Vendedor" minWidth="120"/>
+                <TableColumn fx:id="colSubtotal" text="Subtotal" minWidth="100"/>
+                <TableColumn fx:id="colDescuento" text="Descuento" minWidth="90"/>
+                <TableColumn fx:id="colTotal" text="Total" minWidth="100"/>
+            </columns>
+        </TableView>
+        <VBox fx:id="capaCarga" alignment="CENTER" styleClass="capa-carga">
+            <ProgressIndicator/>
+        </VBox>
+    </StackPane>
+
+    <HBox spacing="8" alignment="CENTER_RIGHT">
+        <Label fx:id="etiquetaPaginacion" styleClass="text-muted"/>
+        <Button fx:id="botonAnterior" styleClass="button-icon">
+            <graphic><FontIcon iconLiteral="fth-chevron-left"/></graphic>
+            <tooltip><Tooltip text="Página anterior"/></tooltip>
+        </Button>
+        <Button fx:id="botonSiguiente" styleClass="button-icon">
+            <graphic><FontIcon iconLiteral="fth-chevron-right"/></graphic>
+            <tooltip><Tooltip text="Página siguiente"/></tooltip>
+        </Button>
+    </HBox>
+</VBox>

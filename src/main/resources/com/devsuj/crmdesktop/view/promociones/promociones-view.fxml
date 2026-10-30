@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ProgressIndicator?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.ToggleButton?>
+<?import javafx.scene.control.Tooltip?>
+<?import javafx.scene.layout.FlowPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import org.kordamp.ikonli.javafx.FontIcon?>
+
+<!-- Promociones. Las aplica solo el servidor al vender; aquí se administran. -->
+<VBox xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml"
+      fx:controller="com.devsuj.crmdesktop.view.promociones.PromocionesController"
+      spacing="16" styleClass="pantalla">
+
+    <Label text="Promociones" styleClass="title-2"/>
+
+    <FlowPane hgap="8" vgap="8" alignment="CENTER_LEFT">
+        <ComboBox fx:id="filtroActiva" prefWidth="170"/>
+        <ComboBox fx:id="filtroAlcance" prefWidth="170"/>
+        <ToggleButton fx:id="botonVigentes" text="Vigentes hoy">
+            <graphic><FontIcon iconLiteral="fth-check-circle"/></graphic>
+            <tooltip><Tooltip text="Ver solo las promociones que aplicarían en una venta de hoy"/></tooltip>
+        </ToggleButton>
+        <HBox fx:id="accionesGestion" spacing="8" alignment="CENTER_LEFT">
+            <Button text="Nueva" onAction="#onNueva" styleClass="accent">
+                <graphic><FontIcon iconLiteral="fth-plus"/></graphic>
+                <tooltip><Tooltip text="Crear una promoción"/></tooltip>
+            </Button>
+            <Button fx:id="botonEditar" text="Editar" onAction="#onEditar">
+                <graphic><FontIcon iconLiteral="fth-edit-2"/></graphic>
+                <tooltip><Tooltip text="Editar (no cambia ventas pasadas; doble clic en la fila)"/></tooltip>
+            </Button>
+            <Button fx:id="botonEstado" onAction="#onCambiarEstado">
+                <graphic><FontIcon iconLiteral="fth-power"/></graphic>
+                <tooltip><Tooltip text="Activar o desactivar la promoción"/></tooltip>
+            </Button>
+            <Button fx:id="botonEliminar" text="Eliminar" onAction="#onEliminar" styleClass="danger">
+                <graphic><FontIcon iconLiteral="fth-trash-2"/></graphic>
+                <tooltip><Tooltip text="Borrar (solo si nunca se aplicó en una venta)"/></tooltip>
+            </Button>
+        </HBox>
+        <Button onAction="#onRecargar" styleClass="button-icon">
+            <graphic><FontIcon iconLiteral="fth-refresh-cw"/></graphic>
+            <tooltip><Tooltip text="Recargar"/></tooltip>
+        </Button>
+    </FlowPane>
+
+    <StackPane VBox.vgrow="ALWAYS">
+        <TableView fx:id="tabla">
+            <columns>
+                <TableColumn fx:id="colNombre" text="Promoción" minWidth="160"/>
+                <TableColumn fx:id="colDescuento" text="Descuento" minWidth="120"/>
+                <TableColumn fx:id="colAlcance" text="Alcance" minWidth="110"/>
+                <TableColumn fx:id="colMinimo" text="Compra mínima" minWidth="100"/>
+                <TableColumn fx:id="colVigencia" text="Vigencia" minWidth="150"/>
+                <TableColumn fx:id="colCampana" text="Campaña" minWidth="110"/>
+                <TableColumn fx:id="colEstado" text="Estado" minWidth="120"/>
+            </columns>
+        </TableView>
+        <VBox fx:id="capaCarga" alignment="CENTER" styleClass="capa-carga">
+            <ProgressIndicator/>
+        </VBox>
+    </StackPane>
+
+    <HBox spacing="8" alignment="CENTER_RIGHT">
+        <Label fx:id="etiquetaPaginacion" styleClass="text-muted"/>
+        <Button fx:id="botonAnterior" styleClass="button-icon">
+            <graphic><FontIcon iconLiteral="fth-chevron-left"/></graphic>
+            <tooltip><Tooltip text="Página anterior"/></tooltip>
+        </Button>
+        <Button fx:id="botonSiguiente" styleClass="button-icon">
+            <graphic><FontIcon iconLiteral="fth-chevron-right"/></graphic>
+            <tooltip><Tooltip text="Página siguiente"/></tooltip>
+        </Button>
+    </HBox>
+</VBox>

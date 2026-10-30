@@ -1,0 +1,268 @@
+/*
+ * Hoja de estilos global. Se aplica encima del tema AtlantaFX.
+ * Usa las variables del tema (-color-...) para que funcione en modo claro y oscuro
+ * sin escribir colores fijos.
+ */
+
+/* Variables de Modena que usa el CSS interno de ControlsFX (SearchableComboBox) y que AtlantaFX
+   no define. Se apuntan a los colores del tema para que se vean bien en claro y oscuro.
+   Van también en .custom-text-field porque el buscador del combo vive en una ventana emergente. */
+.root, .custom-text-field {
+    -fx-text-inner-color: -color-fg-default;
+    -fx-control-inner-background: -color-bg-default;
+    -fx-text-box-border: -color-border-default;
+}
+
+/* ---------- Estructura principal ---------- */
+
+.barra-superior {
+    -fx-padding: 12 20 12 20;
+    -fx-background-color: -color-bg-default;
+    -fx-border-color: transparent transparent -color-border-default transparent;
+}
+
+.menu-lateral {
+    -fx-padding: 16 12 16 12;
+    -fx-pref-width: 220;
+    -fx-min-width: 180;
+    -fx-background-color: -color-bg-subtle;
+}
+
+.menu-lateral .text-caption {
+    -fx-padding: 0 0 8 8;
+}
+
+.boton-menu {
+    -fx-padding: 8 12 8 12;
+    -fx-graphic-text-gap: 10;
+}
+
+/* Cada pantalla de módulo deja el mismo margen. */
+.pantalla {
+    -fx-padding: 24;
+}
+
+/* ---------- Estados de carga y vacíos ---------- */
+
+.capa-carga {
+    -fx-background-color: -color-bg-default;
+    -fx-opacity: 0.7;
+}
+
+.estado-vacio {
+    -fx-padding: 32;
+}
+
+.estado-vacio-icono {
+    -fx-icon-size: 48;
+    -fx-icon-color: -color-fg-subtle;
+}
+
+/* ---------- Etiquetas de color (view.comun.EtiquetaCell) ----------
+   Cada enum usa un prefijo: estado- (cliente), etapa- (oportunidad), rol-, tipo- e interaccion-.
+   Todas usan variables del tema, así se leen bien en modo claro y oscuro. */
+
+.etiqueta {
+    -fx-padding: 2 10 2 10;
+    -fx-background-radius: 10;
+    -fx-background-color: -color-neutral-subtle;
+    -fx-text-fill: -color-fg-default;
+}
+
+.etiqueta-peligro {
+    -fx-background-color: -color-danger-subtle;
+    -fx-text-fill: -color-danger-fg;
+}
+
+.estado-prospecto {
+    -fx-background-color: -color-accent-subtle;
+    -fx-text-fill: -color-accent-fg;
+}
+
+.estado-activo {
+    -fx-background-color: -color-success-subtle;
+    -fx-text-fill: -color-success-fg;
+}
+
+.estado-inactivo {
+    -fx-background-color: -color-neutral-subtle;
+    -fx-text-fill: -color-fg-muted;
+}
+
+/* Etapas del pipeline */
+.etapa-prospecto { -fx-background-color: -color-neutral-subtle; -fx-text-fill: -color-fg-default; }
+.etapa-calificada { -fx-background-color: -color-accent-subtle; -fx-text-fill: -color-accent-fg; }
+.etapa-propuesta { -fx-background-color: -color-accent-muted; -fx-text-fill: -color-accent-fg; }
+.etapa-negociacion { -fx-background-color: -color-warning-subtle; -fx-text-fill: -color-warning-fg; }
+.etapa-ganada { -fx-background-color: -color-success-subtle; -fx-text-fill: -color-success-fg; }
+.etapa-perdida { -fx-background-color: -color-danger-subtle; -fx-text-fill: -color-danger-fg; }
+
+/* Roles */
+.rol-admin { -fx-background-color: -color-danger-subtle; -fx-text-fill: -color-danger-fg; }
+.rol-gerente { -fx-background-color: -color-warning-subtle; -fx-text-fill: -color-warning-fg; }
+.rol-vendedor { -fx-background-color: -color-accent-subtle; -fx-text-fill: -color-accent-fg; }
+
+/* Interacciones: estado y tipo */
+.interaccion-programada { -fx-background-color: -color-accent-subtle; -fx-text-fill: -color-accent-fg; }
+.interaccion-realizada { -fx-background-color: -color-success-subtle; -fx-text-fill: -color-success-fg; }
+.interaccion-cancelada { -fx-background-color: -color-neutral-subtle; -fx-text-fill: -color-fg-muted; }
+.tipo-llamada, .tipo-correo, .tipo-reunion, .tipo-nota { -fx-background-color: -color-neutral-subtle; }
+
+/* Campañas: estado, canal y resultado de los destinatarios */
+.campana-planeada { -fx-background-color: -color-neutral-subtle; -fx-text-fill: -color-fg-default; }
+.campana-activa { -fx-background-color: -color-success-subtle; -fx-text-fill: -color-success-fg; }
+.campana-finalizada { -fx-background-color: -color-accent-subtle; -fx-text-fill: -color-accent-fg; }
+.campana-cancelada { -fx-background-color: -color-danger-subtle; -fx-text-fill: -color-danger-fg; }
+.canal-correo, .canal-sms, .canal-redes { -fx-background-color: -color-neutral-subtle; }
+.resultado-enviado { -fx-background-color: -color-neutral-subtle; -fx-text-fill: -color-fg-default; }
+.resultado-abierto { -fx-background-color: -color-accent-subtle; -fx-text-fill: -color-accent-fg; }
+.resultado-respondio { -fx-background-color: -color-success-subtle; -fx-text-fill: -color-success-fg; }
+
+/* Promociones */
+.alcance-producto { -fx-background-color: -color-accent-subtle; -fx-text-fill: -color-accent-fg; }
+.alcance-venta { -fx-background-color: -color-warning-subtle; -fx-text-fill: -color-warning-fg; }
+
+/* Contratos y tickets */
+.contrato-borrador { -fx-background-color: -color-neutral-subtle; -fx-text-fill: -color-fg-default; }
+.contrato-vigente { -fx-background-color: -color-success-subtle; -fx-text-fill: -color-success-fg; }
+.contrato-vencido { -fx-background-color: -color-warning-subtle; -fx-text-fill: -color-warning-fg; }
+.contrato-cancelado { -fx-background-color: -color-danger-subtle; -fx-text-fill: -color-danger-fg; }
+.ticket-abierto { -fx-background-color: -color-accent-subtle; -fx-text-fill: -color-accent-fg; }
+.ticket-en_proceso { -fx-background-color: -color-warning-subtle; -fx-text-fill: -color-warning-fg; }
+.ticket-cerrado { -fx-background-color: -color-neutral-subtle; -fx-text-fill: -color-fg-muted; }
+.prioridad-baja { -fx-background-color: -color-neutral-subtle; -fx-text-fill: -color-fg-default; }
+.prioridad-media { -fx-background-color: -color-warning-subtle; -fx-text-fill: -color-warning-fg; }
+.prioridad-alta { -fx-background-color: -color-danger-subtle; -fx-text-fill: -color-danger-fg; }
+
+/* Puntos de fidelización */
+.puntos-ganado { -fx-background-color: -color-success-subtle; -fx-text-fill: -color-success-fg; }
+.puntos-canjeado { -fx-background-color: -color-warning-subtle; -fx-text-fill: -color-warning-fg; }
+
+/* Kardex */
+.movimiento-entrada { -fx-background-color: -color-success-subtle; -fx-text-fill: -color-success-fg; }
+.movimiento-salida, .movimiento-venta, .movimiento-canje { -fx-background-color: -color-warning-subtle; -fx-text-fill: -color-warning-fg; }
+
+/* ---------- Paneles de detalle ---------- */
+
+.panel-detalle {
+    -fx-padding: 16;
+    -fx-background-color: -color-bg-subtle;
+}
+
+/* Diagrama del proceso de una oportunidad */
+.paso {
+    -fx-padding: 4 12 4 12;
+    -fx-background-radius: 14;
+    -fx-border-radius: 14;
+    -fx-border-width: 1;
+}
+.paso-recorrida {
+    -fx-background-color: -color-success-subtle;
+    -fx-border-color: -color-success-muted;
+    -fx-text-fill: -color-success-fg;
+}
+.paso-actual {
+    -fx-border-color: -color-accent-emphasis;
+    -fx-border-width: 2;
+    -fx-font-weight: bold;
+}
+.paso-pendiente {
+    -fx-background-color: transparent;
+    -fx-border-color: -color-border-default;
+    -fx-border-style: dashed;
+    -fx-text-fill: -color-fg-muted;
+}
+
+/* Línea de tiempo del historial */
+.punto-tiempo {
+    -fx-min-width: 14;
+    -fx-min-height: 14;
+    -fx-max-width: 14;
+    -fx-max-height: 14;
+    -fx-background-radius: 7;
+    -fx-border-color: -color-accent-emphasis;
+    -fx-border-radius: 7;
+    -fx-border-width: 2;
+}
+.conector-tiempo {
+    -fx-min-width: 2;
+    -fx-max-width: 2;
+    -fx-background-color: -color-border-default;
+}
+.conector-fin {
+    -fx-min-width: 2;
+    -fx-max-width: 2;
+}
+.comentario-tiempo {
+    -fx-text-fill: -color-fg-muted;
+    -fx-font-style: italic;
+}
+
+/* ---------- Tablero (KPIs) ---------- */
+
+.kpi {
+    -fx-padding: 16;
+    -fx-background-color: -color-bg-default;
+    -fx-background-radius: 8;
+    -fx-border-color: -color-border-default;
+    -fx-border-radius: 8;
+}
+.kpi-valor {
+    -fx-font-size: 1.8em;
+    -fx-font-weight: bold;
+}
+.kpi-icono {
+    -fx-icon-color: -color-accent-fg;
+}
+
+.total-venta {
+    -fx-text-fill: -color-accent-fg;
+}
+
+/* Barra de avance de metas: verde al llegar al 100 % */
+.avance-cumplido > .bar {
+    -fx-background-color: -color-success-emphasis;
+}
+
+/* ---------- Login ---------- */
+
+.fondo-login {
+    -fx-background-color: -color-bg-subtle;
+    -fx-padding: 24;
+}
+.tarjeta-login {
+    -fx-padding: 32;
+    -fx-background-color: -color-bg-default;
+    -fx-background-radius: 10;
+    -fx-border-color: -color-border-default;
+    -fx-border-radius: 10;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.15), 18, 0, 0, 4);
+}
+.icono-acento {
+    -fx-icon-color: -color-accent-fg;
+}
+.mensaje-aviso {
+    -fx-padding: 8 12 8 12;
+    -fx-background-color: -color-accent-subtle;
+    -fx-background-radius: 6;
+    -fx-text-fill: -color-accent-fg;
+}
+
+/* ---------- Formularios ---------- */
+
+.error-campo {
+    -fx-text-fill: -color-danger-fg;
+}
+
+.mensaje-general {
+    -fx-padding: 8 12 8 12;
+    -fx-background-color: -color-danger-subtle;
+    -fx-background-radius: 6;
+    -fx-text-fill: -color-danger-fg;
+}
+
+/* ---------- Notificaciones (util.Notificaciones) ---------- */
+
+.capa-notificaciones {
+    -fx-padding: 16;
+}

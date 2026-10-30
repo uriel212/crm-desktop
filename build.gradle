@@ -1,0 +1,61 @@
+plugins {
+    id 'java'
+    id 'application'
+    // Agrega los módulos de JavaFX al classpath/module path y a la tarea "run"
+    id 'org.openjfx.javafxplugin' version '0.1.0'
+}
+
+group = 'com.devsuj'
+version = '0.0.1-SNAPSHOT'
+description = 'crm-desktop'
+
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(25)
+    }
+}
+
+repositories {
+    mavenCentral()
+}
+
+javafx {
+    version = '25.0.5'
+    modules = ['javafx.controls', 'javafx.fxml']
+}
+
+dependencies {
+    // Temas modernos (Primer, Nord, Cupertino) con modo claro y oscuro
+    implementation 'io.github.mkpaz:atlantafx-base:2.1.0'
+    // Íconos
+    implementation 'org.kordamp.ikonli:ikonli-javafx:12.4.0'
+    implementation 'org.kordamp.ikonli:ikonli-feather-pack:12.4.0'
+    // Notificaciones, búsqueda y validación de formularios
+    implementation 'org.controlsfx:controlsfx:11.2.6'
+    // JSON <-> objetos Java (Jackson 3, la misma línea que usa Spring Boot 4 en crm-api)
+    implementation 'tools.jackson.core:jackson-databind:3.2.4'
+
+    testImplementation platform('org.junit:junit-bom:6.1.3')
+    testImplementation 'org.junit.jupiter:junit-jupiter'
+    testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+}
+
+application {
+    // Launcher es una clase "normal" (no extiende Application); así la app
+    // también arranca con el botón Run de IntelliJ sin configurar el module path.
+    mainClass = 'com.devsuj.crmdesktop.Launcher'
+    applicationDefaultJvmArgs = [
+            // JavaFX carga librerías nativas; esto evita el aviso "restricted method" de Java 25
+            '--enable-native-access=javafx.graphics',
+            // ControlsFX (marcas rojas de validación) usa reflexión sobre javafx.scene
+            '--add-opens=javafx.graphics/javafx.scene=ALL-UNNAMED'
+    ]
+}
+
+tasks.withType(JavaCompile).configureEach {
+    options.encoding = 'UTF-8'
+}
+
+tasks.named('test') {
+    useJUnitPlatform()
+}

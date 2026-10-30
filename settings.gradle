@@ -1,0 +1,6 @@
+plugins {
+    // Permite que Gradle descargue el JDK 25 si no lo encuentra instalado
+    id 'org.gradle.toolchains.foojay-resolver-convention' version '1.0.0'
+}
+
+rootProject.name = 'crm-desktop'
